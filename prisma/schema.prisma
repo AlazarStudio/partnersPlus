@@ -23,3 +23,27 @@ model User {
   name     String
   password String
 }
+
+model TypeOrganization {
+  id           Int           @id @default(autoincrement())
+  createdAt    DateTime      @default(now()) @map("created_at")
+  updatedAt    DateTime      @updatedAt @map("updated_at")
+  order        Int           @default(autoincrement())
+  name         String
+  organization Organization?
+}
+
+model Organization {
+  id                 Int              @id @default(autoincrement())
+  createdAt          DateTime         @default(now()) @map("created_at")
+  updatedAt          DateTime         @updatedAt @map("updated_at")
+  name               String
+  subtitle           String?
+  link               String?
+  condition          String?
+  attachments        String[]
+  avatar             String?
+  TypeOrganization   TypeOrganization @relation(fields: [typeOrganizationId], references: [id])
+  typeOrganizationId Int              @unique
+  order              Int              @default(autoincrement())
+}
