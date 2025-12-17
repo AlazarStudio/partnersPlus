@@ -39,11 +39,11 @@ model Organization {
   updatedAt          DateTime         @updatedAt @map("updated_at")
   name               String
   subtitle           String?
-  link               String
-  condition          String
+  link               String?
+  condition          String?
   attachments        String[]
   avatar             String?
   TypeOrganization   TypeOrganization @relation(fields: [typeOrganizationId], references: [id])
-  typeOrganizationId Int
+  typeOrganizationId Int?
   order              Int              @default(autoincrement())
 }
