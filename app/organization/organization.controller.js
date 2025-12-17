@@ -41,22 +41,35 @@ export const getOrganization = asyncHandler(async (req, res) => {
 // @route 	POST /api/organizations
 // @access  Private
 export const createNewOrganization = asyncHandler(async (req, res) => {
-	const { name, subtitle, link, condition, attachments, avatar, typeOrganizationId, order } = req.body
+	// const { name, subtitle, link, condition, attachments, avatar, typeOrganizationId, order } = req.body
 
-	const organization = await prisma.organization.create({
-		data: {
-			name,
-			subtitle, 
-			link, 
-			condition, 
-			attachments, 
-			avatar, 
-			typeOrganizationId, 
-			order
-		}
-	})
+	// const organization = await prisma.organization.create({
+	// 	data: {
+	// 		name,
+	// 		subtitle, 
+	// 		link, 
+	// 		condition, 
+	// 		attachments, 
+	// 		avatar, 
+	// 		typeOrganizationId, 
+	// 		order
+	// 	}
+	// })
 
-	res.json(organization)
+	// res.json(organization)
+
+	const organizationsList = req.body
+
+	const organizations = []
+
+	for (let org of organizationsList) {
+		organizations.push(await prisma.organization.create({
+			data: org
+		}))
+	}
+	
+
+	 res.json(organizations)
 })
 
 

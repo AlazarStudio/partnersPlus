@@ -8,6 +8,9 @@ import { prisma } from '../prisma.js'
 // @access  Private
 export const getOrganizationTypes = asyncHandler(async (req, res) => {
 	const organizationTypes = await prisma.typeOrganization.findMany({
+		include: {
+			organizations: true
+		},
 		orderBy: {
 			order: 'desc'
 		}
