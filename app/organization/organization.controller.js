@@ -60,20 +60,20 @@ export const createNewOrganization = asyncHandler(async (req, res) => {
 	const organizations = []
 
 	for (let org of organizationsList) {
-		if ("avatar" in org) {
-			const orgWithAvatar = org
-			const response = await axios.post("http://localhost:5000/api/uploadFile/upload", org["avatar"], {
-				headers: {
-					'Content-type': 'multipart/form-data'
-				}
-			})
+		// if ("avatar" in org) {
+		// 	const orgWithAvatar = org
+		// 	const response = await axios.post("http://localhost:5000/api/uploadFile/upload", org["avatar"], {
+		// 		headers: {
+		// 			'Content-type': 'multipart/form-data'
+		// 		}
+		// 	})
 
-			Object.assign(orgWithAvatar, { "avatar": response["data"]["file"]["url"] } )
-			
-			organizations.push(await prisma.organization.create({
-				data: org
-			}))
-		}
+		// 	Object.assign(orgWithAvatar, { "avatar": response["data"]["file"]["url"] } )
+
+		// 	organizations.push(await prisma.organization.create({
+		// 		data: org
+		// 	}))
+		// }
 		organizations.push(await prisma.organization.create({
 			data: org
 		}))
