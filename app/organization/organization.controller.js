@@ -1,14 +1,22 @@
 import asyncHandler from 'express-async-handler'
 
 import { prisma } from '../prisma.js'
+import axios from 'axios'
+import { response } from 'express'
 
 
 // @desc    Get _emptys
 // @route   GET /api/organizations
 // @access  Public
 export const getOrganizations = asyncHandler(async (req, res) => {
-	console.log(req.params)
 	const organizations = await prisma.organization.findMany({
+		include:{
+			TypeOrganization: {
+				select: {
+					name: true
+				}
+			}
+		},
 		orderBy: {
 			order: 'desc'
 		}
@@ -22,8 +30,14 @@ export const getOrganizations = asyncHandler(async (req, res) => {
 // @route   GET /api/organizations/:id
 // @access  Public
 export const getOrganization = asyncHandler(async (req, res) => {
-	console.log(req.params.id)
 	const organization = await prisma.organization.findUnique({
+		include: {
+			TypeOrganization: {
+				select: {
+					name: true
+				}
+			}
+		},
 		where: { id: +req.params.id }
 	})
 
@@ -41,28 +55,25 @@ export const getOrganization = asyncHandler(async (req, res) => {
 // @route 	POST /api/organizations
 // @access  Private
 export const createNewOrganization = asyncHandler(async (req, res) => {
-	// const { name, subtitle, link, condition, attachments, avatar, typeOrganizationId, order } = req.body
-
-	// const organization = await prisma.organization.create({
-	// 	data: {
-	// 		name,
-	// 		subtitle, 
-	// 		link, 
-	// 		condition, 
-	// 		attachments, 
-	// 		avatar, 
-	// 		typeOrganizationId, 
-	// 		order
-	// 	}
-	// })
-
-	// res.json(organization)
-
 	const organizationsList = req.body
 
 	const organizations = []
 
 	for (let org of organizationsList) {
+		if ("avatar" in org) {
+			const orgWithAvatar = org
+			const response = await axios.post("http://localhost:5000/api/uploadFile/upload", org["avatar"], {
+				headers: {
+					'Content-type': 'multipart/form-data'
+				}
+			})
+
+			Object.assign(orgWithAvatar, { "avatar": response["data"]["file"]["url"] } )
+			
+			organizations.push(await prisma.organization.create({
+				data: org
+			}))
+		}
 		organizations.push(await prisma.organization.create({
 			data: org
 		}))

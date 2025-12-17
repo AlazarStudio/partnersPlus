@@ -23,8 +23,10 @@ export const getOrganizationTypes = asyncHandler(async (req, res) => {
 // @route   GET /api/_emptys/:id
 // @access  Private
 export const getOrganizationType = asyncHandler(async (req, res) => {
-	console.log(req.params.id)
 	const organizationType = await prisma.typeOrganization.findUnique({
+		include: {
+			organizations: true
+		},
 		where: { id: +req.params.id }
 	})
 
