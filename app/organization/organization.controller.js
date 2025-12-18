@@ -10,13 +10,6 @@ import { response } from 'express'
 // @access  Public
 export const getOrganizations = asyncHandler(async (req, res) => {
 	const organizations = await prisma.organization.findMany({
-		include:{
-			TypeOrganization: {
-				select: {
-					name: true
-				}
-			}
-		},
 		orderBy: {
 			order: 'desc'
 		}
