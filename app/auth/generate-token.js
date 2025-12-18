@@ -10,3 +10,5 @@ export const generateToken = userId =>
 			expiresIn: '10d'
 		}
 	)
+
+

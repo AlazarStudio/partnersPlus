@@ -25,25 +25,25 @@ model User {
 }
 
 model TypeOrganization {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
-  order     Int      @default(autoincrement())
-  name      String
-  organizations Organization[]
+  id            Int            @id @default(autoincrement())
+  createdAt     DateTime       @default(now()) @map("created_at")
+  updatedAt     DateTime       @updatedAt @map("updated_at")
+  order         Int            @default(autoincrement())
+  name          String
+  organizations Organization[] 
 }
 
 model Organization {
-  id                 Int              @id @default(autoincrement())
-  createdAt          DateTime         @default(now()) @map("created_at")
-  updatedAt          DateTime         @updatedAt @map("updated_at")
+  id                 Int      @id @default(autoincrement())
+  createdAt          DateTime @default(now()) @map("created_at")
+  updatedAt          DateTime @updatedAt @map("updated_at")
   name               String
   subtitle           String?
   link               String?
   condition          String?
   attachments        String[]
   avatar             String?
-  TypeOrganization   TypeOrganization @relation(fields: [typeOrganizationId], references: [id])
+  typeOrganization   TypeOrganization? @relation(fields: [typeOrganizationId], references: [id], onDelete: Cascade)
   typeOrganizationId Int?
-  order              Int              @default(autoincrement())
+  order              Int      @default(autoincrement())
 }

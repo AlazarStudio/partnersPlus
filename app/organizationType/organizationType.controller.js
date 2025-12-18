@@ -59,7 +59,7 @@ export const createNewOrganizationType = asyncHandler(async (req, res) => {
 // @route 	PUT /api/_emptys/:id
 // @access  Private
 export const updateOrganizationType = asyncHandler(async (req, res) => {
-	const { name } = req.body
+	const { name, order } = req.body
 
 	try {
 		const organizationType = await prisma.typeOrganization.update({
@@ -67,7 +67,8 @@ export const updateOrganizationType = asyncHandler(async (req, res) => {
 				id: +req.params.id
 			},
 			data: {
-				
+				name,
+				order
 			}
 		})
 
@@ -83,6 +84,7 @@ export const updateOrganizationType = asyncHandler(async (req, res) => {
 // @route 	DELETE /api/_emptys/:id
 // @access  Private
 export const deleteOrganizationType = asyncHandler(async (req, res) => {
+
 	try {
 		const organizationType = await prisma.typeOrganization.delete({
 			where: {
@@ -93,6 +95,6 @@ export const deleteOrganizationType = asyncHandler(async (req, res) => {
 		res.json({ message: 'organizationType deleted!' })
 	} catch (error) {
 		res.status(404)
-		throw new Error('organizationType not found!')
+		throw new Error('organizationType not found!', error)
 	}
 })
