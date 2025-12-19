@@ -39,11 +39,12 @@ model Organization {
   updatedAt          DateTime @updatedAt @map("updated_at")
   name               String
   subtitle           String?
-  link               String?
-  condition          String?
-  attachments        String[]
+  linkName           String?
+  link               String
+  condition          String
+  attachments        Json?
   avatar             String?
   typeOrganization   TypeOrganization? @relation(fields: [typeOrganizationId], references: [id], onDelete: Cascade)
   typeOrganizationId Int?
-  order              Int      @default(autoincrement())
+  order              Int      @default(autoincrement())  
 }

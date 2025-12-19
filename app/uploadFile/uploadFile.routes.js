@@ -11,11 +11,11 @@ import {
 
 const router = express.Router()
 
-router.route('/upload').post(upload.single('file'), uploadFile)
+router.route('/upload').post(protect, upload.single('file'), uploadFile)
 
-router.route('/upload-multiple').post(upload.array('files', 10), uploadFiles)
+router.route('/upload-multiple').post(protect, upload.array('files', 10), uploadFiles)
 
-router.route('/:filename').delete(deleteFile)
+router.route('/:filename').delete(protect, deleteFile)
 
 
 

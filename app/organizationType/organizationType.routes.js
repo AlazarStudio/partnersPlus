@@ -12,12 +12,12 @@ import {
 
 const router = express.Router()
 
-router.route('/').post(createNewOrganizationType).get(getOrganizationTypes)
+router.route('/').post(protect, createNewOrganizationType).get(getOrganizationTypes)
 
 router
 	.route('/:id')
 	.get(getOrganizationType)
-	.put(updateOrganizationType)
-	.delete(deleteOrganizationType)
+	.put(protect, updateOrganizationType)
+	.delete(protect, deleteOrganizationType)
 
 export default router

@@ -81,7 +81,7 @@ export const createNewOrganization = asyncHandler(async (req, res) => {
 // @route 	PUT /api/organizations/:id
 // @access  Private
 export const updateOrganization = asyncHandler(async (req, res) => {
-	const { name, subtitle, link, condition, attachments, avatar, typeOrganizationId, order } = req.body
+	const { name, subtitle, link, linkName, condition, attachments, avatar, typeOrganizationId, order } = req.body
 
 	try {
 		const organization = await prisma.organization.update({
@@ -92,6 +92,7 @@ export const updateOrganization = asyncHandler(async (req, res) => {
 				name,
 				subtitle, 
 				link, 
+				linkName,
 				condition, 
 				attachments, 
 				avatar, 

@@ -12,13 +12,13 @@ import {
 
 const router = express.Router()
 
-router.route('/').post(createNewOrganization).get(getOrganizations)
+router.route('/').post(protect, createNewOrganization).get(getOrganizations)
 
 router
 	.route('/:id')
 	.get(getOrganization)
-	.put(updateOrganization)
-	.delete(deleteOrganization)
+	.put(protect, updateOrganization)
+	.delete(protect, deleteOrganization)
 
 
 
